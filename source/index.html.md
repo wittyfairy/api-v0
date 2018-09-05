@@ -181,6 +181,8 @@ completedBy | false | String | The email address of the user that completed the 
 
 ## Modify a task
 
+Pass in a `id` or `externalResourceId` to identify a task and then pass any other fields to modify them, fields that are not passed are not changed. You can pass the value `null` as a value for any query parameter in order to remove that fields e.g. to remove a due date for example. 
+
 ```javascript
 var options = {
     method: 'PATCH', 
@@ -206,7 +208,7 @@ rp(options)
 > The above command returns JSON structured like this:
 
 ```json
-{ "status": success }
+{ "status": "success" }
 ```
 
 This endpoint modifies a single task. 
@@ -219,9 +221,9 @@ This endpoint modifies a single task.
 
 Parameter | Required | Type |Description
 --------- | ----------- | ----------- | -----------
-id | must specify this or externalResourceId | String | The id of the task resource. 
-externalResourceId | must specify this or id | String | The externalResourceId of the task that was specified when it was created. 
-text | true | String | The main title of the task (this is what shows in the Kanban view).
+id | must specify this or externalResourceId | String | The id of the task resource (cannot be modified). 
+externalResourceId | must specify this or id | String | The externalResourceId of the task that was specified when it was created (cannot be modified)
+text | false | String | The main title of the task (this is what shows in the Kanban view).
 notes | false | String (html) | This is the "description" that shows up when the Kanban card is opened up. It is not recommended to modify this with the API because it will overwrite existing notes i.e. this doesn't play nice with collaborative notes. 
 assignee | false | String (email) | The e-mail address of the user who the task is assigned to. Tasks without an assignee show up under the creator's column until there's an assignee
 startDate | false | String (ISO8601) | The first Kanban day column this task should show up on. Must be ISO-8601 and in the UTC timezone. If not specified, the task will end up in the backlog. 
