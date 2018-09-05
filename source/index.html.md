@@ -1,239 +1,231 @@
 ---
-title: Sunsama API Reference
+title: Sunsama API V0 Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - ruby
-  - python
   - javascript
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
+  - <a href='https://sunsama.com'>Sunsama</a>
 
 includes:
   - errors
+  - examples
 
 search: true
 ---
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
-
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
-
-This example API documentation page was created with [Slate](https://github.com/lord/slate). Feel free to edit it and use it as a base for your own API's documentation.
+Welcome to the Sunsama API V0. You can use this API to create, edit, and retrieve information about tasks in your Sunsama workspace. 
 
 # Authentication
 
-> To authorize, use this code:
+## Getting your API Key
 
-```ruby
-require 'kittn'
+Please contact support@sunsama.com to request an API key for your workspace. 
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
+All requests must be authenticated with the `Authorization` header with your workspace api key as the value. 
 
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
-
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
+> To authorize requests pass your workspace-api-key as the `Authorization` header. 
 
 ```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
+var options = {
+    uri: 'https://sunsama.com/api/v0/tasks',
+    qs: {
+        id: 'xxxxxxxxxx'
+    },
+    headers: {
+        'Authorization': 'workspace-api-key',
+        'Content-Type': 'application/json',
+    },
+    json: true,
+};
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+# Tasks 
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
+## Get a Task
 
 ```javascript
-const kittn = require('kittn');
+var options = {
+    uri: 'https://sunsama.com/api/v0/tasks',
+    qs: {
+        id: 'task-id',
+    },
+    headers: {
+        'Authorization': 'workspace-api-key',
+        'Content-Type': 'application/json',
+    },
+    json: true // Automatically parses the JSON string in the response
+};
 
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
+rp(options)
+    .then((task) => console.log(task))
+    .catch(function (err) {
+        // API call failed...
+    });
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
+{
+    "_id": "9oFhjoAWQqhntetxj",
+    "createdBy": "ashutosh@sunsama.com",
+    "text": "send that email",
+    "createdAt": "2018-09-04T05:38:24.531Z",
+    "completed": true,
+    "private": false,
+    "followers": [],
+    "notes": "<div>complex notes that I made</div>",
+    "subtasks": [
+        {
+            "title": "do 1"
+        },
+        {
+            "title": "do 2"
+        },
+        {
+            "title": "do 3"
+        }
+    ],
+    "lastModified": "2018-09-04T21:13:46.029Z",
+    "comments": [
+        {
+            "text": "<div>my first comment</div>",
+            "createdAt": "2018-09-04T07:15:12.635Z",
+            "user": "ashutosh@sunsama.com"
+        },
+        {
+            "text": "uploaded this file: <a href=\"https://cdn.filestackcontent.com/Jd5krXjPQ4e1Jv2mhNY9?policy=eyJjb250YWluZXIiOiJzdW5zYW1hLXN0b3JhZ2UtZGV2IiwibWF4U2l6ZSI6MTA0ODU3NjAsImV4cGlyeSI6MTY5Mzg0NzQwNTA0NiwiY2FsbCI6WyJyZWFkIl0sInBhdGgiOiIvZ3JvdXBzL2R1Q25HNnhlQkNIUjg3WG1zLyoifQ==&signature=b4e0e19665cf4bd0e6577cc8235ad2939ce158a39c2bddb356d8bf7f9b0a810f\" target=\"_blank\">Screen Shot 2018-08-28 at 14.12.41.png</a>",
+            "createdAt": "2018-09-04T17:10:05.062Z",
+            "user": "ashutosh@sunsama.com"
+        }
+    ],
+    "completeOn": "2018-09-03T20:00:00.000Z",
+    "workingSessions": [],
+    "assignee": "ashutosh@sunsama.com"
+}
 ```
 
-This endpoint retrieves all kittens.
+This endpoint retrieves a single task. 
 
 ### HTTP Request
 
-`GET http://example.com/api/kittens`
+`GET https://sunsama.com/api/v0/tasks`
 
-### Query Parameters
+### URL Query String Parameters
 
-Parameter | Default | Description
+Parameter | Required | Description
 --------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+id | false | The id of the task you want to retrieve. 
+externalResourceId | false | If you created this task with the API and specified an externalResourceId at the time of creation, you can use this id to find the task again. 
 
 <aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+You must include either `id` or `externalResourceId` to be able retrieve a task 
 </aside>
 
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
+## Create a new task
 
 ```javascript
-const kittn = require('kittn');
+var options = {
+    method: 'POST',
+    uri: 'https://sunsama.com/api/v0/tasks',
+    qs: {
+        text: 'my new task',
+        createdBy: 'ashutosh@sunsama.com', 
+    },
+    headers: {
+        'Authorization': 'workspace-api-key',
+        'Content-Type': 'application/json',
+    },
+    json: true,
+};
 
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
+rp(options)
+    .then(({ taskId }) => console.log(taskId))
+    .catch(function (err) {
+        // API call failed...
+    });
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "taskId": "9oFhjoAWQqhntetxj"
 }
 ```
 
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+This endpoint creates a single task. 
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`POST http://sunsama.com/api/v0/`
 
 ### URL Parameters
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+Parameter | Required | Type |Description
+--------- | ----------- | ----------- | -----------
+text | true | String | The main title of the task (this is what shows in the Kanban view).
+createdBy | true | String (email) | The e-mail address of the user who is creating the task. 
+notes | false | String (html) | This is the "description" that shows up when the Kanban card is opened up. 
+assignee | false | String (email) | The e-mail address of the user who the task is assigned to. Tasks without an assignee show up under the creator's column until there's an assignee
+startDate | false | String (ISO8601) | The first Kanban day column this task should show up on. Must be ISO-8601 and in the UTC timezone. If not specified, the task will end up in the backlog. 
+dueDate | false | String (ISO8601) | The due date of the task. Must be ISO-8601 in the UTC timezone. 
+channelName | false | String | The name of the channel that the task should be assigned to. Defaults to "no channel" also known #all. 
+externalResourceId | false | String | String identifier that can be provided when creating a task, can be used to reference your task later. Typically you'd use this to link a Sunsama task to a source record in your systems. The value must be unique within your workspace. 
+url | false | String | The URL that should be displayed inside this task, provide this if you want a quick way for users to access some source item. 
+completeDate | false | String (ISO8601) | The date on which this task was completed. 
+completedBy | false | String | The email address of the user that completed the task, must be specified if the `completeDate` is specified. 
 
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
+## Modify a task
 
 ```javascript
-const kittn = require('kittn');
+var options = {
+    method: 'PATCH', 
+    uri: 'https://sunsama.com/api/v0/tasks',
+    qs: {
+        id: 'task-id',
+        text: 'a new title', 
+    },
+    headers: {
+        'Authorization': 'workspace-api-key',
+        'Content-Type': 'application/json',
+    },
+    json: true // Automatically parses the JSON string in the response
+};
 
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
+rp(options)
+    .then((task) => console.log(task))
+    .catch(function (err) {
+        // API call failed...
+    });
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
+{ "status": success }
 ```
 
-This endpoint deletes a specific kitten.
+This endpoint modifies a single task. 
 
 ### HTTP Request
 
-`DELETE http://example.com/kittens/<ID>`
+`PATCH https://sunsama.com/api/v0/tasks`
 
 ### URL Parameters
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
-
+Parameter | Required | Type |Description
+--------- | ----------- | ----------- | -----------
+id | must specify this or externalResourceId | String | The id of the task resource. 
+externalResourceId | must specify this or id | String | The externalResourceId of the task that was specified when it was created. 
+text | true | String | The main title of the task (this is what shows in the Kanban view).
+notes | false | String (html) | This is the "description" that shows up when the Kanban card is opened up. It is not recommended to modify this with the API because it will overwrite existing notes i.e. this doesn't play nice with collaborative notes. 
+assignee | false | String (email) | The e-mail address of the user who the task is assigned to. Tasks without an assignee show up under the creator's column until there's an assignee
+startDate | false | String (ISO8601) | The first Kanban day column this task should show up on. Must be ISO-8601 and in the UTC timezone. If not specified, the task will end up in the backlog. 
+dueDate | false | String (ISO8601) | The due date of the task. Must be ISO-8601 in the UTC timezone. 
+channelName | false | String | The name of the channel that the task should be assigned to. Defaults to "no channel" also known #all. 
+completeDate | false | String (ISO8601) | The date on which this task was completed. 
+completedBy | false | String | The email address of the user that completed the task, must be specified if the `completeDate` is specified. 
