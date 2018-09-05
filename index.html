@@ -469,7 +469,9 @@ You must include either `id` or `externalResourceId` to be able retrieve a task
 <td>The email address of the user that completed the task, must be specified if the <code>completeDate</code> is specified.</td>
 </tr>
 </tbody></table>
-<h2 id='modify-a-task'>Modify a task</h2><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+<h2 id='modify-a-task'>Modify a task</h2>
+<p>Pass in a <code>id</code> or <code>externalResourceId</code> to identify a task and then pass any other fields to modify them, fields that are not passed are not changed. You can pass the value <code>null</code> as a value for any query parameter in order to remove that fields e.g. to remove a due date for example. </p>
+<pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
     <span class="na">method</span><span class="p">:</span> <span class="s1">'PATCH'</span><span class="p">,</span> 
     <span class="na">uri</span><span class="p">:</span> <span class="s1">'https://sunsama.com/api/v0/tasks'</span><span class="p">,</span>
     <span class="na">qs</span><span class="p">:</span> <span class="p">{</span>
@@ -492,7 +494,7 @@ You must include either `id` or `externalResourceId` to be able retrieve a task
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w"> </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="err">success</span><span class="w"> </span><span class="p">}</span><span class="w">
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w"> </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="w"> </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint modifies a single task. </p>
 <h3 id='http-request-3'>HTTP Request</h3>
@@ -510,17 +512,17 @@ You must include either `id` or `externalResourceId` to be able retrieve a task
 <td>id</td>
 <td>must specify this or externalResourceId</td>
 <td>String</td>
-<td>The id of the task resource.</td>
+<td>The id of the task resource (cannot be modified).</td>
 </tr>
 <tr>
 <td>externalResourceId</td>
 <td>must specify this or id</td>
 <td>String</td>
-<td>The externalResourceId of the task that was specified when it was created.</td>
+<td>The externalResourceId of the task that was specified when it was created (cannot be modified)</td>
 </tr>
 <tr>
 <td>text</td>
-<td>true</td>
+<td>false</td>
 <td>String</td>
 <td>The main title of the task (this is what shows in the Kanban view).</td>
 </tr>
