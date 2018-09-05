@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Sunsama API Reference</title>
+    <title>Sunsama API V0 Reference</title>
 
     <style>
       .highlight table td { padding: 5px; }
@@ -201,7 +201,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;,&quot;python&quot;,&quot;javascript&quot;]">
+  <body class="index" data-languages="[&quot;javascript&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -211,9 +211,6 @@
     <div class="toc-wrapper">
       <img src="images/logo.png" class="logo" alt="Logo" />
         <div class="lang-selector">
-              <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
-              <a href="#" data-language-name="python">python</a>
               <a href="#" data-language-name="javascript">javascript</a>
         </div>
         <div class="search">
@@ -226,218 +223,352 @@
           </li>
           <li>
             <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
-          </li>
-          <li>
-            <a href="#kittens" class="toc-h1 toc-link" data-title="Kittens">Kittens</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-all-kittens" class="toc-h2 toc-link" data-title="Get All Kittens">Get All Kittens</a>
+                    <a href="#getting-your-api-key" class="toc-h2 toc-link" data-title="Getting your API Key">Getting your API Key</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#tasks" class="toc-h1 toc-link" data-title="Tasks">Tasks</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-a-task" class="toc-h2 toc-link" data-title="Get a Task">Get a Task</a>
                   </li>
                   <li>
-                    <a href="#get-a-specific-kitten" class="toc-h2 toc-link" data-title="Get a Specific Kitten">Get a Specific Kitten</a>
+                    <a href="#create-a-new-task" class="toc-h2 toc-link" data-title="Create a new task">Create a new task</a>
                   </li>
                   <li>
-                    <a href="#delete-a-specific-kitten" class="toc-h2 toc-link" data-title="Delete a Specific Kitten">Delete a Specific Kitten</a>
+                    <a href="#modify-a-task" class="toc-h2 toc-link" data-title="Modify a task">Modify a task</a>
                   </li>
               </ul>
           </li>
           <li>
             <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
           </li>
+          <li>
+            <a href="#examples" class="toc-h1 toc-link" data-title="Examples">Examples</a>
+          </li>
       </ul>
         <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
-            <li><a href='https://github.com/lord/slate'>Documentation Powered by Slate</a></li>
+            <li><a href='https://sunsama.com'>Sunsama</a></li>
         </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
+<p>Welcome to the Sunsama API V0. You can use this API to create, edit, and retrieve information about tasks in your Sunsama workspace. </p>
+<h1 id='authentication'>Authentication</h1><h2 id='getting-your-api-key'>Getting your API Key</h2>
+<p>Please contact support@sunsama.com to request an API key for your workspace. </p>
 
-<p>We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+<p>All requests must be authenticated with the <code>Authorization</code> header with your workspace api key as the value. </p>
 
-<p>This example API documentation page was created with <a href="https://github.com/lord/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&#39;s documentation.</p>
-<h1 id='authentication'>Authentication</h1>
 <blockquote>
-<p>To authorize, use this code:</p>
+<p>To authorize requests pass your workspace-api-key as the <code>Authorization</code> header. </p>
 </blockquote>
-<pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">uri</span><span class="p">:</span> <span class="s1">'https://sunsama.com/api/v0/tasks'</span><span class="p">,</span>
+    <span class="na">qs</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">id</span><span class="p">:</span> <span class="s1">'xxxxxxxxxx'</span>
+    <span class="p">},</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">'Authorization'</span><span class="p">:</span> <span class="s1">'workspace-api-key'</span><span class="p">,</span>
+        <span class="s1">'Content-Type'</span><span class="p">:</span> <span class="s1">'application/json'</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="na">json</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+<span class="p">};</span>
+</code></pre><h1 id='tasks'>Tasks</h1><h2 id='get-a-task'>Get a Task</h2><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">uri</span><span class="p">:</span> <span class="s1">'https://sunsama.com/api/v0/tasks'</span><span class="p">,</span>
+    <span class="na">qs</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">id</span><span class="p">:</span> <span class="s1">'task-id'</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">'Authorization'</span><span class="p">:</span> <span class="s1">'workspace-api-key'</span><span class="p">,</span>
+        <span class="s1">'Content-Type'</span><span class="p">:</span> <span class="s1">'application/json'</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="na">json</span><span class="p">:</span> <span class="kc">true</span> <span class="c1">// Automatically parses the JSON string in the response</span>
+<span class="p">};</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>Make sure to replace <code>meowmeowmeow</code> with your API key.</p>
-</blockquote>
-
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
-
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
-
-<p><code>Authorization: meowmeowmeow</code></p>
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">kittens</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">();</span>
+<span class="nx">rp</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">task</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">task</span><span class="p">))</span>
+    <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// API call failed...</span>
+    <span class="p">});</span>
 </code></pre>
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9oFhjoAWQqhntetxj"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"createdBy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ashutosh@sunsama.com"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"send that email"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-04T05:38:24.531Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"completed"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"private"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"followers"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="s2">"notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;div&gt;complex notes that I made&lt;/div&gt;"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"subtasks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"do 1"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"do 2"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"do 3"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"lastModified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-04T21:13:46.029Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"comments"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;div&gt;my first comment&lt;/div&gt;"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-04T07:15:12.635Z"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ashutosh@sunsama.com"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uploaded this file: &lt;a href=</span><span class="se">\"</span><span class="s2">https://cdn.filestackcontent.com/Jd5krXjPQ4e1Jv2mhNY9?policy=eyJjb250YWluZXIiOiJzdW5zYW1hLXN0b3JhZ2UtZGV2IiwibWF4U2l6ZSI6MTA0ODU3NjAsImV4cGlyeSI6MTY5Mzg0NzQwNTA0NiwiY2FsbCI6WyJyZWFkIl0sInBhdGgiOiIvZ3JvdXBzL2R1Q25HNnhlQkNIUjg3WG1zLyoifQ==&amp;signature=b4e0e19665cf4bd0e6577cc8235ad2939ce158a39c2bddb356d8bf7f9b0a810f</span><span class="se">\"</span><span class="s2"> target=</span><span class="se">\"</span><span class="s2">_blank</span><span class="se">\"</span><span class="s2">&gt;Screen Shot 2018-08-28 at 14.12.41.png&lt;/a&gt;"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-04T17:10:05.062Z"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ashutosh@sunsama.com"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"completeOn"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-03T20:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"workingSessions"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="s2">"assignee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ashutosh@sunsama.com"</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves all kittens.</p>
+<p>This endpoint retrieves a single task. </p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code>GET http://example.com/api/kittens</code></p>
-<h3 id='query-parameters'>Query Parameters</h3>
+<p><code>GET https://sunsama.com/api/v0/tasks</code></p>
+<h3 id='url-query-string-parameters'>URL Query String Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
-<th>Default</th>
+<th>Required</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>include_cats</td>
+<td>id</td>
 <td>false</td>
-<td>If set to true, the result will also include cats.</td>
+<td>The id of the task you want to retrieve.</td>
 </tr>
 <tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
+<td>externalResourceId</td>
+<td>false</td>
+<td>If you created this task with the API and specified an externalResourceId at the time of creation, you can use this id to find the task again.</td>
 </tr>
 </tbody></table>
 
 <aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+You must include either `id` or `externalResourceId` to be able retrieve a task 
 </aside>
-<h2 id='get-a-specific-kitten'>Get a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<h2 id='create-a-new-task'>Create a new task</h2><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">method</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
+    <span class="na">uri</span><span class="p">:</span> <span class="s1">'https://sunsama.com/api/v0/tasks'</span><span class="p">,</span>
+    <span class="na">qs</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">text</span><span class="p">:</span> <span class="s1">'my new task'</span><span class="p">,</span>
+        <span class="na">createdBy</span><span class="p">:</span> <span class="s1">'ashutosh@sunsama.com'</span><span class="p">,</span> 
+    <span class="p">},</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">'Authorization'</span><span class="p">:</span> <span class="s1">'workspace-api-key'</span><span class="p">,</span>
+        <span class="s1">'Content-Type'</span><span class="p">:</span> <span class="s1">'application/json'</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="na">json</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+<span class="p">};</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="nx">rp</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(({</span> <span class="nx">taskId</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">taskId</span><span class="p">))</span>
+    <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// API call failed...</span>
+    <span class="p">});</span>
 </code></pre>
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+  </span><span class="s2">"taskId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9oFhjoAWQqhntetxj"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves a specific kitten.</p>
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+<p>This endpoint creates a single task. </p>
 <h3 id='http-request-2'>HTTP Request</h3>
-<p><code>GET http://example.com/kittens/&lt;ID&gt;</code></p>
+<p><code>POST http://sunsama.com/api/v0/</code></p>
 <h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the kitten to retrieve</td>
+<td>text</td>
+<td>true</td>
+<td>String</td>
+<td>The main title of the task (this is what shows in the Kanban view).</td>
+</tr>
+<tr>
+<td>createdBy</td>
+<td>true</td>
+<td>String (email)</td>
+<td>The e-mail address of the user who is creating the task.</td>
+</tr>
+<tr>
+<td>notes</td>
+<td>false</td>
+<td>String (html)</td>
+<td>This is the &quot;description&quot; that shows up when the Kanban card is opened up.</td>
+</tr>
+<tr>
+<td>assignee</td>
+<td>false</td>
+<td>String (email)</td>
+<td>The e-mail address of the user who the task is assigned to. Tasks without an assignee show up under the creator&#39;s column until there&#39;s an assignee</td>
+</tr>
+<tr>
+<td>startDate</td>
+<td>false</td>
+<td>String (ISO8601)</td>
+<td>The first Kanban day column this task should show up on. Must be ISO-8601 and in the UTC timezone. If not specified, the task will end up in the backlog.</td>
+</tr>
+<tr>
+<td>dueDate</td>
+<td>false</td>
+<td>String (ISO8601)</td>
+<td>The due date of the task. Must be ISO-8601 in the UTC timezone.</td>
+</tr>
+<tr>
+<td>channelName</td>
+<td>false</td>
+<td>String</td>
+<td>The name of the channel that the task should be assigned to. Defaults to &quot;no channel&quot; also known #all.</td>
+</tr>
+<tr>
+<td>externalResourceId</td>
+<td>false</td>
+<td>String</td>
+<td>String identifier that can be provided when creating a task, can be used to reference your task later. Typically you&#39;d use this to link a Sunsama task to a source record in your systems. The value must be unique within your workspace.</td>
+</tr>
+<tr>
+<td>url</td>
+<td>false</td>
+<td>String</td>
+<td>The URL that should be displayed inside this task, provide this if you want a quick way for users to access some source item.</td>
+</tr>
+<tr>
+<td>completeDate</td>
+<td>false</td>
+<td>String (ISO8601)</td>
+<td>The date on which this task was completed.</td>
+</tr>
+<tr>
+<td>completedBy</td>
+<td>false</td>
+<td>String</td>
+<td>The email address of the user that completed the task, must be specified if the <code>completeDate</code> is specified.</td>
 </tr>
 </tbody></table>
-<h2 id='delete-a-specific-kitten'>Delete a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<h2 id='modify-a-task'>Modify a task</h2><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">method</span><span class="p">:</span> <span class="s1">'PATCH'</span><span class="p">,</span> 
+    <span class="na">uri</span><span class="p">:</span> <span class="s1">'https://sunsama.com/api/v0/tasks'</span><span class="p">,</span>
+    <span class="na">qs</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">id</span><span class="p">:</span> <span class="s1">'task-id'</span><span class="p">,</span>
+        <span class="na">text</span><span class="p">:</span> <span class="s1">'a new title'</span><span class="p">,</span> 
+    <span class="p">},</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">'Authorization'</span><span class="p">:</span> <span class="s1">'workspace-api-key'</span><span class="p">,</span>
+        <span class="s1">'Content-Type'</span><span class="p">:</span> <span class="s1">'application/json'</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="na">json</span><span class="p">:</span> <span class="kc">true</span> <span class="c1">// Automatically parses the JSON string in the response</span>
+<span class="p">};</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -X DELETE
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="nx">rp</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">task</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">task</span><span class="p">))</span>
+    <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// API call failed...</span>
+    <span class="p">});</span>
 </code></pre>
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"deleted"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">":("</span><span class="w">
-</span><span class="p">}</span><span class="w">
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w"> </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="err">success</span><span class="w"> </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint deletes a specific kitten.</p>
+<p>This endpoint modifies a single task. </p>
 <h3 id='http-request-3'>HTTP Request</h3>
-<p><code>DELETE http://example.com/kittens/&lt;ID&gt;</code></p>
+<p><code>PATCH https://sunsama.com/api/v0/tasks</code></p>
 <h3 id='url-parameters-2'>URL Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the kitten to delete</td>
+<td>id</td>
+<td>must specify this or externalResourceId</td>
+<td>String</td>
+<td>The id of the task resource.</td>
+</tr>
+<tr>
+<td>externalResourceId</td>
+<td>must specify this or id</td>
+<td>String</td>
+<td>The externalResourceId of the task that was specified when it was created.</td>
+</tr>
+<tr>
+<td>text</td>
+<td>true</td>
+<td>String</td>
+<td>The main title of the task (this is what shows in the Kanban view).</td>
+</tr>
+<tr>
+<td>notes</td>
+<td>false</td>
+<td>String (html)</td>
+<td>This is the &quot;description&quot; that shows up when the Kanban card is opened up. It is not recommended to modify this with the API because it will overwrite existing notes i.e. this doesn&#39;t play nice with collaborative notes.</td>
+</tr>
+<tr>
+<td>assignee</td>
+<td>false</td>
+<td>String (email)</td>
+<td>The e-mail address of the user who the task is assigned to. Tasks without an assignee show up under the creator&#39;s column until there&#39;s an assignee</td>
+</tr>
+<tr>
+<td>startDate</td>
+<td>false</td>
+<td>String (ISO8601)</td>
+<td>The first Kanban day column this task should show up on. Must be ISO-8601 and in the UTC timezone. If not specified, the task will end up in the backlog.</td>
+</tr>
+<tr>
+<td>dueDate</td>
+<td>false</td>
+<td>String (ISO8601)</td>
+<td>The due date of the task. Must be ISO-8601 in the UTC timezone.</td>
+</tr>
+<tr>
+<td>channelName</td>
+<td>false</td>
+<td>String</td>
+<td>The name of the channel that the task should be assigned to. Defaults to &quot;no channel&quot; also known #all.</td>
+</tr>
+<tr>
+<td>completeDate</td>
+<td>false</td>
+<td>String (ISO8601)</td>
+<td>The date on which this task was completed.</td>
+</tr>
+<tr>
+<td>completedBy</td>
+<td>false</td>
+<td>String</td>
+<td>The email address of the user that completed the task, must be specified if the <code>completeDate</code> is specified.</td>
 </tr>
 </tbody></table>
 <h1 id='errors'>Errors</h1>
-<aside class="notice">
-This error section is stored in a separate file in <code>includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files...just save them to the <code>includes</code> folder and add them to the top of your <code>index.md</code>'s frontmatter. Files are included in the order listed.
-</aside>
-
-<p>The Kittn API uses the following error codes:</p>
+<p>The Sunsama API uses the following error codes:</p>
 
 <table><thead>
 <tr>
@@ -454,32 +585,8 @@ This error section is stored in a separate file in <code>includes/_errors.md</co
 <td>Unauthorized -- Your API key is wrong.</td>
 </tr>
 <tr>
-<td>403</td>
-<td>Forbidden -- The kitten requested is hidden for administrators only.</td>
-</tr>
-<tr>
 <td>404</td>
-<td>Not Found -- The specified kitten could not be found.</td>
-</tr>
-<tr>
-<td>405</td>
-<td>Method Not Allowed -- You tried to access a kitten with an invalid method.</td>
-</tr>
-<tr>
-<td>406</td>
-<td>Not Acceptable -- You requested a format that isn&#39;t json.</td>
-</tr>
-<tr>
-<td>410</td>
-<td>Gone -- The kitten requested has been removed from our servers.</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&#39;m a teapot.</td>
-</tr>
-<tr>
-<td>429</td>
-<td>Too Many Requests -- You&#39;re requesting too many kittens! Slow down!</td>
+<td>Not Found -- The specified task could not be found.</td>
 </tr>
 <tr>
 <td>500</td>
@@ -490,13 +597,12 @@ This error section is stored in a separate file in <code>includes/_errors.md</co
 <td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
 </tr>
 </tbody></table>
+<h1 id='examples'>Examples</h1>
+<p>... examples go here.</p>
 
       </div>
       <div class="dark-box">
           <div class="lang-selector">
-                <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
-                <a href="#" data-language-name="python">python</a>
                 <a href="#" data-language-name="javascript">javascript</a>
           </div>
       </div>
