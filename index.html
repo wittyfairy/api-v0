@@ -239,6 +239,9 @@
                     <a href="#create-a-new-task" class="toc-h2 toc-link" data-title="Create a new task">Create a new task</a>
                   </li>
                   <li>
+                    <a href="#get-tasks-on-a-day" class="toc-h2 toc-link" data-title="Get Tasks on a Day">Get Tasks on a Day</a>
+                  </li>
+                  <li>
                     <a href="#modify-a-task" class="toc-h2 toc-link" data-title="Modify a task">Modify a task</a>
                   </li>
               </ul>
@@ -391,7 +394,58 @@ You must include either `id` or `externalResourceId` to be able retrieve a task
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint creates a single task. </p>
+<h2 id='get-tasks-on-a-day'>Get Tasks on a Day</h2><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">uri</span><span class="p">:</span> <span class="s1">'https://sunsama.com/api/v0/tasks/day'</span><span class="p">,</span>
+    <span class="na">qs</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">userEmail</span><span class="p">:</span> <span class="s1">'ashutosh@sunsama.com'</span><span class="p">,</span>
+        <span class="na">date</span><span class="p">:</span> <span class="s1">'2018-12-17T00:00:00-07:00'</span><span class="p">,</span>
+        <span class="na">timezone</span><span class="p">:</span> <span class="s1">'America/Los_Angeles'</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">'Authorization'</span><span class="p">:</span> <span class="s1">'workspace-api-key'</span><span class="p">,</span>
+        <span class="s1">'Content-Type'</span><span class="p">:</span> <span class="s1">'application/json'</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="na">json</span><span class="p">:</span> <span class="kc">true</span> <span class="c1">// Automatically parses the JSON string in the response</span>
+<span class="p">};</span>
+
+<span class="nx">rp</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">task</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">task</span><span class="p">))</span>
+    <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// API call failed...</span>
+    <span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+
+<p>This endpoint retrieves an array of tasks. </p>
 <h3 id='http-request-2'>HTTP Request</h3>
+<p><code>GET https://sunsama.com/api/v0/tasks/day</code></p>
+<h3 id='url-query-string-parameters-2'>URL Query String Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>userEmail</td>
+<td>true</td>
+<td>The Sunsama account email for the user&#39;s tasks you want</td>
+</tr>
+<tr>
+<td>timezone</td>
+<td>true</td>
+<td>Timezone that you want to view tasks in, remember tasks rollover at midnight local in Sunsama</td>
+</tr>
+<tr>
+<td>date</td>
+<td>true</td>
+<td>Date that you want tasks for, should be in ISO8601 forma</td>
+</tr>
+</tbody></table>
+<h3 id='http-request-3'>HTTP Request</h3>
 <p><code>POST http://sunsama.com/api/v0/</code></p>
 <h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
@@ -497,7 +551,7 @@ You must include either `id` or `externalResourceId` to be able retrieve a task
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w"> </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="w"> </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint modifies a single task. </p>
-<h3 id='http-request-3'>HTTP Request</h3>
+<h3 id='http-request-4'>HTTP Request</h3>
 <p><code>PATCH https://sunsama.com/api/v0/tasks</code></p>
 <h3 id='url-parameters-2'>URL Parameters</h3>
 <table><thead>
