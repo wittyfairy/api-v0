@@ -159,6 +159,48 @@ rp(options)
 
 This endpoint creates a single task. 
 
+
+## Get Tasks on a Day
+
+```javascript
+var options = {
+    uri: 'https://sunsama.com/api/v0/tasks/day',
+    qs: {
+        userEmail: 'ashutosh@sunsama.com',
+        date: '2018-12-17T00:00:00-07:00',
+        timezone: 'America/Los_Angeles',
+    },
+    headers: {
+        'Authorization': 'workspace-api-key',
+        'Content-Type': 'application/json',
+    },
+    json: true // Automatically parses the JSON string in the response
+};
+
+rp(options)
+    .then((task) => console.log(task))
+    .catch(function (err) {
+        // API call failed...
+    });
+```
+
+> The above command returns JSON structured like this:
+
+This endpoint retrieves an array of tasks. 
+
+### HTTP Request
+
+`GET https://sunsama.com/api/v0/tasks/day`
+
+### URL Query String Parameters
+
+Parameter | Required | Description
+--------- | ------- | -----------
+userEmail | true | The Sunsama account email for the user's tasks you want
+timezone | true | Timezone that you want to view tasks in, remember tasks rollover at midnight local in Sunsama
+date | true | Date that you want tasks for, should be in ISO8601 forma
+
+
 ### HTTP Request
 
 `POST http://sunsama.com/api/v0/`
